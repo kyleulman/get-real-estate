@@ -1,8 +1,9 @@
+import { mongoClient } from '$lib/mongodb';
+import { postmarkClient } from '$lib/postmark';
 import { error, fail } from '@sveltejs/kit';
+import { formatInTimeZone } from 'date-fns-tz';
 import isEmail from 'validator/lib/isEmail';
 import type { Actions } from './$types';
-import { postmarkClient } from '$lib/postmark';
-import { mongoClient } from '$lib/mongodb';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
@@ -53,13 +54,14 @@ async function insertOneEmail(email: string) {
 }
 
 async function sendNotification(email: string) {
-	const now = new Date().toLocaleString();
+	const now = Date.now();
+	const est = formatInTimeZone(now, 'America/New_York', 'yyyy-MM-dd HH:mm:ss zzz');
 
-	const htmlBody = `<p>A new lead was captured at ${now}. Their email address is ${email}. Good luck!</p>`;
-	const textBody = `A new lead was captured at ${now}. Their email address is ${email}. Good luck!`;
+	const htmlBody = `<p>A new lead was captured at ${est}. Their email address is ${email}. Good luck!</p>`;
+	const textBody = `A new lead was captured at ${est}. Their email address is ${email}. Good luck!`;
 
 	try {
-		return await postmarkClient.sendEmail({
+		await postmarkClient.sendEmail({
 			From: 'leads@getreal.estate',
 			To: 'kyle@getreal.estate',
 			Subject: 'You have a new lead!',

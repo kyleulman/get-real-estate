@@ -6,7 +6,7 @@ export const load = (({ url }) => {
 		title: 'Get Real Estate',
 		type: 'website',
 		robots: 'all',
-		imageSrc: url.origin + '/card-1440x720.png',
+		imageSrc: url.origin + '/images/card-1440x720.png',
 		imageAlt: 'Website image.',
 		twitterCard: 'summary_large_image',
 		twitterSite: 'kyleulman',
