@@ -1,13 +1,26 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 	import EmailForm from '../lib/EmailForm.svelte';
+	import type { ActionData, PageData } from './$types';
 
-	export let data;
+	export let data: PageData;
+	export let form: ActionData;
+
+	let isMounted: boolean = false;
+
+	onMount(() => (isMounted = true));
 </script>
 
 <main class="mx-auto my-6 flex max-w-4xl flex-col gap-6 tablet:my-28 tablet:gap-28">
 	<section class="max-w-2xl space-y-6">
 		<h1 class="heading-xl">{data.content.hero.heading}</h1>
 		<p>{data.content.hero.description}</p>
+		{#if isMounted && form}
+			<p transition:slide class:text-red-400={form.error} class:text-green-400={form.message}>
+				{form.error || form.message}
+			</p>
+		{/if}
 		<div class="flex flex-wrap items-center gap-3">
 			<EmailForm />
 			<small class="text-red-300">Or continue scrolling to learn more.</small>
@@ -46,6 +59,16 @@
 >
 	<h2 class="heading-lg">{data.content.footer.heading}</h2>
 	<p>{data.content.footer.description}</p>
+	{#if isMounted && form}
+		<p
+			transition:slide
+			class:text-red-400={form.error}
+			class:text-green-400={form.message}
+			class="bg-zinc-900 p-3"
+		>
+			{form.error || form.message}
+		</p>
+	{/if}
 	<EmailForm />
 </footer>
 

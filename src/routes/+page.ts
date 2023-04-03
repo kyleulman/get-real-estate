@@ -1,6 +1,6 @@
 import type { PageMetadata } from '@kyleulman/lib';
-import type { PageLoad } from './$types';
 import { content } from '../content';
+import type { PageLoad } from './$types';
 
 export const load = (({ url }) => {
 	const page: PageMetadata = {

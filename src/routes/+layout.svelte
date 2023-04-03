@@ -7,6 +7,8 @@
 	export let data: PageData;
 </script>
 
-<Head page={$page.data.page} site={data.site} />
+{#if $page.status === 200}
+	<Head page={$page.data.page} site={data.site} />
+{/if}
 
 <slot />
