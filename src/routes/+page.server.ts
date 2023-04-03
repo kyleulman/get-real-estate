@@ -1,6 +1,7 @@
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import isEmail from 'validator/lib/isEmail';
 import type { Actions } from './$types';
+import { postmarkClient } from '$lib/postmark';
 import { mongoClient } from '$lib/mongodb';
 
 export const actions: Actions = {
@@ -20,6 +21,8 @@ export const actions: Actions = {
 
 		if (result.acknowledged === true && result.insertedId) {
 			// send email
+			await sendNotification(email);
+
 			return {
 				message: 'Thanks for your interest! Please expect an email with details shortly. -Kyle'
 			};
@@ -46,5 +49,25 @@ async function insertOneEmail(email: string) {
 		return await mongoClient.db('get-real-estate').collection('leads').insertOne({ email: email });
 	} finally {
 		await mongoClient.close();
+	}
+}
+
+async function sendNotification(email: string) {
+	const now = new Date().toLocaleString();
+
+	const htmlBody = `<p>A new lead was captured at ${now}. Their email address is ${email}. Good luck!</p>`;
+	const textBody = `A new lead was captured at ${now}. Their email address is ${email}. Good luck!`;
+
+	try {
+		return await postmarkClient.sendEmail({
+			From: 'leads@getreal.estate',
+			To: 'kyle@getreal.estate',
+			Subject: 'You have a new lead!',
+			HtmlBody: htmlBody,
+			TextBody: textBody,
+			MessageStream: 'outbound'
+		});
+	} catch (err) {
+		throw error(500, JSON.stringify(err));
 	}
 }
