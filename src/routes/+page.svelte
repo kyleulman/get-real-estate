@@ -18,7 +18,7 @@
 		<p>{data.content.hero.description}</p>
 		{#if isMounted && form}
 			<p transition:slide class:text-red-400={form.error} class:text-green-400={form.message}>
-				{form.error || form.message}
+				{@html form.error || form.message}
 			</p>
 		{/if}
 		<div class="flex flex-wrap items-center gap-3">
@@ -64,9 +64,9 @@
 			transition:slide
 			class:text-red-400={form.error}
 			class:text-green-400={form.message}
-			class="bg-zinc-900 p-3"
+			class="max-w-md rounded-lg bg-zinc-900 p-3"
 		>
-			{form.error || form.message}
+			{@html form.error || form.message}
 		</p>
 	{/if}
 	<EmailForm />

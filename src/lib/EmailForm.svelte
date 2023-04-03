@@ -2,9 +2,10 @@
 	<div class="relative">
 		<label for="email" class="absolute -z-10 opacity-0">Email</label>
 		<input
-			type="text"
+			type="email"
 			id="email"
 			name="email"
+			required
 			placeholder="kyle@getreal.estate"
 			class="w-full p-1 text-zinc-900"
 		/>
