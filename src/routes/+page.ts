@@ -4,8 +4,8 @@ import { content } from '../content';
 
 export const load = (({ url }) => {
 	const page: PageMetadata = {
-		title: 'Welcome home!',
-		description: 'An opinionated SvelteKit template with TypeScript & Tailwind.',
+		title: content.home.hero.heading,
+		description: content.home.hero.description,
 		url: url.href
 	};
 
