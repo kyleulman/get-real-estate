@@ -7,7 +7,7 @@
 	export let data: PageData;
 	export let form: ActionData;
 
-	let isMounted: boolean = false;
+	let isMounted = false;
 
 	onMount(() => (isMounted = true));
 </script>
