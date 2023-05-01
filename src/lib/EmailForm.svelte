@@ -6,7 +6,7 @@
 			id="email"
 			name="email"
 			required
-			placeholder="kyle@getreal.estate"
+			placeholder="hello@getreal.estate"
 			class="w-full p-1 text-zinc-900"
 		/>
 	</div>

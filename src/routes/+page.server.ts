@@ -24,16 +24,16 @@ export const actions: Actions = {
 
 		if (result.acknowledged === true && result.insertedId) {
 			// send email
-			// await sendNotification(email);
+			await sendNotification(email);
 
 			return {
 				message:
-					'Thanks for your interest! Please expect an email with details shortly. -Kyle'
+					'Thanks for your interest! Please expect an email with details shortly.'
 			};
 		}
 
 		return fail(500, {
-			error: `An unexpected error occurred. Please try again in a few minutes or let me know about it by sending a message to <a href="mailto:kyle@getreal.estate" class="underline">kyle@getreal.estate</a>.`
+			error: `An unexpected error occurred. Please try again in a few minutes or let me know about it by sending a message to <a href="mailto:hello@getreal.estate" class="underline">hello@getreal.estate</a>.`
 		});
 	}
 };
@@ -76,7 +76,7 @@ async function sendNotification(email: string) {
 	try {
 		await postmarkClient.sendEmail({
 			From: 'leads@getreal.estate',
-			To: 'kyle@getreal.estate',
+			To: 'hello@getreal.estate',
 			Subject: 'You have a new lead!',
 			HtmlBody: htmlBody,
 			TextBody: textBody,
