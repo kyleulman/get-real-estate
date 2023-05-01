@@ -15,17 +15,20 @@ export const actions: Actions = {
 		}
 
 		if ((await findOneByEmail(email)) !== null) {
-			return fail(400, { error: 'This email already exists, please try a different email.' });
+			return fail(400, {
+				error: 'This email already exists, please try a different email.'
+			});
 		}
 
 		const result = await insertOneEmail(email);
 
 		if (result.acknowledged === true && result.insertedId) {
 			// send email
-			await sendNotification(email);
+			// await sendNotification(email);
 
 			return {
-				message: 'Thanks for your interest! Please expect an email with details shortly. -Kyle'
+				message:
+					'Thanks for your interest! Please expect an email with details shortly. -Kyle'
 			};
 		}
 
@@ -38,7 +41,10 @@ export const actions: Actions = {
 async function findOneByEmail(email: string) {
 	try {
 		await mongoClient.connect();
-		return await mongoClient.db('get-real-estate').collection('leads').findOne({ email: email });
+		return await mongoClient
+			.db('get-real-estate')
+			.collection('leads')
+			.findOne({ email: email });
 	} finally {
 		await mongoClient.close();
 	}
@@ -47,7 +53,10 @@ async function findOneByEmail(email: string) {
 async function insertOneEmail(email: string) {
 	try {
 		await mongoClient.connect();
-		return await mongoClient.db('get-real-estate').collection('leads').insertOne({ email: email });
+		return await mongoClient
+			.db('get-real-estate')
+			.collection('leads')
+			.insertOne({ email: email });
 	} finally {
 		await mongoClient.close();
 	}
@@ -55,7 +64,11 @@ async function insertOneEmail(email: string) {
 
 async function sendNotification(email: string) {
 	const now = Date.now();
-	const est = formatInTimeZone(now, 'America/New_York', 'yyyy-MM-dd HH:mm:ss zzz');
+	const est = formatInTimeZone(
+		now,
+		'America/New_York',
+		'yyyy-MM-dd HH:mm:ss zzz'
+	);
 
 	const htmlBody = `<p>A new lead was captured at ${est}. Their email address is ${email}. Good luck!</p>`;
 	const textBody = `A new lead was captured at ${est}. Their email address is ${email}. Good luck!`;

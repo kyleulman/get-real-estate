@@ -1,8 +1,11 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		'./node_modules/@kyuisonline/workbench/dist/*.{html,js,svelte,ts}'
+	],
 	theme: {
 		extend: {
 			fontFamily: {

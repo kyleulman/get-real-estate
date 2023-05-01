@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Head } from '@kyleulman/lib';
+	import { Head } from '@kyuisonline/workbench';
 	import '../app.css';
-	import type { PageData } from './$types';
+	import type { LayoutData } from './$types';
 
-	export let data: PageData;
+	export let data: LayoutData;
 </script>
 
-{#if $page.status === 200}
-	<Head page={$page.data.page} site={data.site} />
-{/if}
+{#key $page}
+	<Head page={$page.data.content.metadata} shared={data.shared} />
+{/key}
 
 <slot />

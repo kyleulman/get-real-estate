@@ -12,12 +12,18 @@
 	onMount(() => (isMounted = true));
 </script>
 
-<main class="mx-auto my-6 flex max-w-4xl flex-col gap-6 tablet:my-28 tablet:gap-28">
+<main
+	class="mx-auto my-6 flex max-w-4xl flex-col gap-6 tablet:my-28 tablet:gap-28"
+>
 	<section class="max-w-2xl space-y-6">
 		<h1 class="heading-xl">{data.content.hero.heading}</h1>
 		<p>{data.content.hero.description}</p>
 		{#if isMounted && form}
-			<p transition:slide class:text-red-400={form.error} class:text-green-400={form.message}>
+			<p
+				transition:slide
+				class:text-red-400={form.error}
+				class:text-green-400={form.message}
+			>
 				{@html form.error || form.message}
 			</p>
 		{/if}
